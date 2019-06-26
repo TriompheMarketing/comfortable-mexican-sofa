@@ -43,14 +43,14 @@ class Comfy::Cms::Page < ActiveRecord::Base
   validate :validate_format_of_unescaped_slug
 
   # -- Scopes ------------------------------------------------------------------
-  scope :published, -> { where(is_published: true) }
-
+  scope :published, -> { where(is_published: true) && where("published_at <= ?",  Time.now)}
   # -- Class Methods -----------------------------------------------------------
   # Tree-like structure for pages
   def self.options_for_select(site:, current_page: nil, exclude_self: false)
     options = []
 
     options_for_page = ->(page, depth = 0) do
+      if page
       return if exclude_self && page == current_page
 
       options << ["#{'. . ' * depth}#{page.label}", page.id]
@@ -58,12 +58,14 @@ class Comfy::Cms::Page < ActiveRecord::Base
       page.children.order(:position).each do |child_page|
         options_for_page.call(child_page, depth + 1)
       end
+      end
     end
 
     options_for_page.call(site.pages.root)
 
     options
   end
+
 
   # -- Instance Methods --------------------------------------------------------
   # For previewing purposes sometimes we need to have full_path set. This

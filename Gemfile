@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 source "http://rubygems.org"
-
-gemspec
-
+ruby '2.4.4'
+gem 'rails', '~> 5.2.3'
+gem "comfortable_mexican_sofa"
+gem 'mongoid'
+gem 'pry-rails'
 group :development, :test do
   gem "autoprefixer-rails", "~> 8.1.0"
   gem "byebug",             "~> 10.0.0", platforms: %i[mri mingw x64_mingw]

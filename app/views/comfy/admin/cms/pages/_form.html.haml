@@ -1,7 +1,7 @@
 = comfy_admin_partial "comfy/admin/cms/partials/page_form_before", form: form
 
 = form.text_field :label, data: { slugify: @page.new_record? }
-
+= form.date_field :published_at
 - if @page.parent.present?
   = form.text_field :slug, data: { slug: true }, prepend: @page.parent.full_path
 
