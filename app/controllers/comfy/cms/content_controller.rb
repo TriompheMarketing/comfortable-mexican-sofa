@@ -32,6 +32,7 @@ class Comfy::Cms::ContentController < Comfy::Cms::BaseController
     end
   end
 
+
 protected
 
   def render_page(status = :ok)
@@ -60,7 +61,9 @@ protected
   # Attempting to populate @cms_page and @cms_layout instance variables so they
   # can be used in view helpers/partials
   def load_cms_page
+    if !params[:cms_path].nil?
     id = "#{params[:cms_path]. split('/')[-1]}"
+    end
     path= find_cms_page_by_full_path(id,"/#{params[:cms_path]}")
     unless path
       if find_cms_page_by_full_path("/404","")
@@ -76,7 +79,8 @@ protected
   # serve translation data
   def find_cms_page_by_full_path(id,y)
     puts "/#{params[:cms_path]}"
-    if id.match(/\D/).nil?
+
+    if id.nil? || id.match(/\D/).nil?
       @cms_page = @cms_site.pages.find(id)
     else
       @cms_page = @cms_site.pages.published.find_by!(full_path: "/#{params[:cms_path]}")
