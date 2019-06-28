@@ -43,7 +43,7 @@ class Comfy::Cms::Page < ActiveRecord::Base
   validate :validate_format_of_unescaped_slug
 
   # -- Scopes ------------------------------------------------------------------
-  scope :published, -> { where(is_published: true) && where("published_at <= ?",  Time.now)}
+  scope :published, -> { where(is_published: true).where("published_at <= ?",  Time.now)}
   # -- Class Methods -----------------------------------------------------------
   # Tree-like structure for pages
   def self.options_for_select(site:, current_page: nil, exclude_self: false)
