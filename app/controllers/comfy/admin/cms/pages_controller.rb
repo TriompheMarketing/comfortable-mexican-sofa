@@ -37,6 +37,9 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+   if @page.published_at.nil?
+     @page.published_at = Date.today
+   end
     @page.save!
     flash[:success] = I18n.t("comfy.admin.cms.pages.created")
     redirect_to action: :edit, id: @page
