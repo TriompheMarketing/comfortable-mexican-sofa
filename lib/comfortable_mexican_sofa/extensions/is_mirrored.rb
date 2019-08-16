@@ -32,8 +32,9 @@ module ComfortableMexicanSofa::IsMirrored
     # Creating or updating a mirror object. Relationships are mirrored
     # but content is unique. When updating need to grab mirrors based on
     # self.slug_was, new objects will use self.slug.
+=begin
     def sync_mirror
-      return if self.is_mirrored || !self.site.is_mirrored?
+      #return if self.is_mirrored || !self.site.is_mirrored?
       
       (Comfy::Cms::Site.mirrored - [self.site]).each do |site|
         mirror = case self
@@ -70,6 +71,7 @@ module ComfortableMexicanSofa::IsMirrored
         end
       end
     end
+=end
     
     # Mirrors should be destroyed
     def destroy_mirror

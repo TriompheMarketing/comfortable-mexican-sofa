@@ -5,8 +5,6 @@
 = form.text_field :hostname
 = form.text_field :path
 = form.select :locale, ComfortableMexicanSofa.config.locales.to_a.collect{|l| ["#{l[1]} (#{l[0]})", l[0]]}
-= form.form_group do
-  = form.check_box :is_mirrored, :label => t('.is_mirrored')
 
 = render 'comfy/admin/cms/partials/site_form_after', :form => form
 

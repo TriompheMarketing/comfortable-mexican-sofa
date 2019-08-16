@@ -15,7 +15,7 @@ class Comfy::Cms::Site < ActiveRecord::Base
                     :assign_hostname,
                     :assign_label
   before_save :clean_path
-  after_save  :sync_mirrors
+
 
   # -- Validations ----------------------------------------------------------
   validates :identifier,
@@ -30,7 +30,7 @@ class Comfy::Cms::Site < ActiveRecord::Base
     :format     => { :with => /\A[\w\.\-]+(?:\:\d+)?\z/ }
 
   # -- Scopes ---------------------------------------------------------------
-  scope :mirrored, -> { where(:is_mirrored => true) }
+
 
   # -- Class Methods --------------------------------------------------------
   # returning the Comfy::Cms::Site instance based on host and path
@@ -99,7 +99,7 @@ protected
   # When site is marked as a mirror we need to sync its structure
   # with other mirrors.
   def sync_mirrors
-    return unless saved_change_to_is_mirrored? && is_mirrored?
+    #return unless saved_change_to_is_mirrored? && is_mirrored?
 
     [self, Comfy::Cms::Site.mirrored.where("id != #{id}").first].compact.each do |site|
       site.layouts.reload
