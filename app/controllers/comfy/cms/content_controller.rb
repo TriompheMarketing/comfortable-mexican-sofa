@@ -54,14 +54,7 @@ protected
     ComfortableMexicanSofa::Fixture::Importer.new(@cms_site.identifier).import!
   end
 
-=begin
   def load_cms_page
-    @cms_page = @cms_site.pages.published.find_by_full_path!("/#{params[:cms_path]}")
-  end
-
-=end
-  def load_cms_page
-    puts "------------UUUUUUCSBCSJBSBJCSCHB---------------------------"
     if !params[:cms_path].nil?
       id = "#{params[:cms_path]. split('/')[-1]}"
     end
@@ -79,7 +72,6 @@ protected
 
   def find_cms_page_by_full_path(id,y)
     puts "/#{params[:cms_path]}"
-    puts "________XXXXXXXXXXX---------------------------------------"
     if id.nil? || id.match(/\D/).nil?
       @cms_page = @cms_site.pages.find(id)
     else
