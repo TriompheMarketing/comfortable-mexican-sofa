@@ -5,6 +5,10 @@ gemspec
 # apps can also use will_paginate so there's no dependency in gemspec
 gem 'kaminari'
 
+#enables us to explore the run-time view of a program or library.
+
+gem 'pry-rails'
+
 group :development do
   gem 'awesome_print'
   gem 'better_errors'

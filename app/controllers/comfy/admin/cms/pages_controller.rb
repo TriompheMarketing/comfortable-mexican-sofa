@@ -73,7 +73,7 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     head :ok
   end
 
-protected
+  protected
 
   def index_for_redactor
     tree_walker = ->(page, list, offset) do
@@ -87,9 +87,9 @@ protected
     end
 
     page_select_options = [{
-      :name => I18n.t('comfy.admin.cms.pages.form.choose_link'),
-      :url  => false
-    }] + tree_walker.(@site.pages.root, [ ], 0)
+                               :name => I18n.t('comfy.admin.cms.pages.form.choose_link'),
+                               :url  => false
+                           }] + tree_walker.(@site.pages.root, [ ], 0)
 
     render :json => page_select_options
   end

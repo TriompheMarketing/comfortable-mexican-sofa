@@ -61,30 +61,31 @@ protected
 
 =end
   def load_cms_page
-   id = "#{params[:cms_path]. split('/')[-1]}"
-   path= find_cms_page_by_full_path(id,"/#{params[:cms_path]}")
-  unless path
-    if find_cms_page_by_full_path("/404","")
-          render_page(:not_found)
-  else
-    message = "Page Not Found"
+    puts "------------UUUUUUCSBCSJBSBJCSCHB---------------------------"
+    if !params[:cms_path].nil?
+      id = "#{params[:cms_path]. split('/')[-1]}"
+    end
+    path= find_cms_page_by_full_path(id,"/#{params[:cms_path]}")
+    unless path
+      if find_cms_page_by_full_path("/404","")
+        render_page(:not_found)
+      else
+        message = "Page Not Found"
         raise ActionController::RoutingError, message
       end
     end
 
-
-
-end
+  end
 
   def find_cms_page_by_full_path(id,y)
     puts "/#{params[:cms_path]}"
-
+    puts "________XXXXXXXXXXX---------------------------------------"
     if id.nil? || id.match(/\D/).nil?
       @cms_page = @cms_site.pages.find(id)
     else
       @cms_page = @cms_site.pages.published.find_by!(full_path: "/#{params[:cms_path]}")
     end
-    @cms_page.translate!
+
     @cms_layout = @cms_page.layout
     @cms_page
   rescue ActiveRecord::RecordNotFound

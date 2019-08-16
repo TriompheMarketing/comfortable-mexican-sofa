@@ -41,7 +41,7 @@ class Comfy::Cms::Page < ActiveRecord::Base
 
   # -- Scopes ---------------------------------------------------------------
   default_scope -> { order('comfy_cms_pages.position') }
-  scope :published, -> { where(:is_published => true) }
+  scope :published, -> { where(is_published: true).where("published_at <= ?",  Time.now)}
 
   # -- Class Methods --------------------------------------------------------
   # Tree-like structure for pages
