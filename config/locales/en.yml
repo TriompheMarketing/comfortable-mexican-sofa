@@ -229,7 +229,7 @@ en:
 
         categories:
           index:
-            label: Categories
+            label: Sub-Categories
             edit: Edit
             done: Done
             all: All
