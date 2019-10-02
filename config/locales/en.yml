@@ -234,10 +234,10 @@ en:
             done: Done
             all: All
             add: Add
-            add_placeholder: Add Category
+            add_placeholder: Add Sub-Category
           show:
             are_you_sure: Are you sure?
           edit:
             save: Save
           form:
-            label: Categories
+            label: Sub-Categories
