@@ -56,4 +56,7 @@ protected
       flash.now[:danger] = I18n.t('comfy.admin.cms.base.fixtures_enabled')
     end
   end
+
+
+
 end

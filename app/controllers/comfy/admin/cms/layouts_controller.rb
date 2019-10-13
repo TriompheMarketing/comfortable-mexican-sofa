@@ -2,7 +2,7 @@ class Comfy::Admin::Cms::LayoutsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_layout,  :only => [:new, :create]
   before_action :load_layout,   :only => [:edit, :update, :destroy]
-  before_action :authorize
+  before_action :authorize, :verify_ip_address
 
   def index
     return redirect_to :action => :new if @site.layouts.count == 0
@@ -67,5 +67,15 @@ protected
   def layout_params
     params.fetch(:layout, {}).permit!
   end
+
+  private
+
+  def verify_ip_address
+    head :unauthorized if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # redirect_to root_path, alert: 'Unauthorized access.'
+    # end
+  end
+
 
 end

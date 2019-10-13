@@ -5,7 +5,9 @@ class Comfy::Admin::Cms::SitesController < Comfy::Admin::Cms::BaseController
 
   before_action :build_site,  :only => [:new, :create]
   before_action :load_site,   :only => [:edit, :update, :destroy]
-  before_action :authorize
+  before_action :authorize, :verify_ip_address
+  # skip_before_action :verify_ip_address, only: :index
+
 
   def index
     return redirect_to :action => :new if ::Comfy::Cms::Site.count == 0
@@ -63,5 +65,17 @@ protected
   def site_params
     params.fetch(:site, {}).permit!
   end
+
+
+  private
+
+  def verify_ip_address
+    head :unauthorized if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # redirect_to root_path, alert: 'Unauthorized access.'
+    # end
+  end
+
+
 
 end

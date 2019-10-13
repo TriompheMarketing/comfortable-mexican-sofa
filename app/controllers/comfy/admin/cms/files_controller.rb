@@ -4,7 +4,7 @@ class Comfy::Admin::Cms::FilesController < Comfy::Admin::Cms::BaseController
 
   before_action :build_file,  :only => [:new, :create]
   before_action :load_file,   :only => [:edit, :update, :destroy]
-  before_action :authorize
+  before_action :authorize, :verify_ip_address
 
   def index
     case params[:source]
@@ -122,4 +122,14 @@ protected
     end
     params.fetch(:file, {}).permit!
   end
+
+  private
+
+  def verify_ip_address
+    head :unauthorized if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # redirect_to root_path, alert: 'Unauthorized access.'
+    # end
+  end
+
 end

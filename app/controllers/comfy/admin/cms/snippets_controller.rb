@@ -2,7 +2,7 @@ class Comfy::Admin::Cms::SnippetsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_snippet, :only => [:new, :create]
   before_action :load_snippet,  :only => [:edit, :update, :destroy]
-  before_action :authorize
+  before_action :authorize, :verify_ip_address
 
   def index
     return redirect_to :action => :new if @site.snippets.count == 0
@@ -64,4 +64,14 @@ protected
   def snippet_params
     params.fetch(:snippet, {}).permit!
   end
+
+  private
+
+  def verify_ip_address
+    head :unauthorized if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # if Whitelist.find_by(ip_address: request.remote_ip).nil?
+    # redirect_to root_path, alert: 'Unauthorized access.'
+    # end
+  end
+
 end
