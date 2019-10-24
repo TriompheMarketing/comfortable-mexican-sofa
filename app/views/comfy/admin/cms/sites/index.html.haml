@@ -22,6 +22,5 @@
         .btn-group.btn-group-sm
           = link_to t('.select'),  comfy_admin_cms_site_pages_path(site), :class => 'btn btn-default'
           = link_to t('.edit'), edit_comfy_admin_cms_site_path(site), :class => 'btn btn-default'
-          = link_to t('.delete'), comfy_admin_cms_site_path(site), :method => :delete, :data => {:confirm => t('.are_you_sure')}, :class => 'btn btn-danger'
-          
+         
 = render 'comfy/admin/cms/partials/sites_after'
