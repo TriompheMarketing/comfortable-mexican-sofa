@@ -49,6 +49,8 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def destroy
+    @page.prepare_last_revision
+    @page.create_revision
     @page.destroy
     flash[:success] = I18n.t('comfy.admin.cms.pages.deleted')
     redirect_to :action => :index

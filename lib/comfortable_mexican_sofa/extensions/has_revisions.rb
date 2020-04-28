@@ -14,7 +14,6 @@ module ComfortableMexicanSofa::HasRevisions
       
       has_many :revisions,
         :as         => :record,
-        :dependent  => :destroy,
         :class_name => 'Comfy::Cms::Revision'
       
       before_save :prepare_revision
@@ -39,6 +38,14 @@ module ComfortableMexicanSofa::HasRevisions
         end
       end
     end
+
+    def prepare_last_revision
+      self.revision_data = revision_fields.inject({}) do |c, field|
+          c[field] = self.send("#{field}_was")
+          c
+      end
+    end
+
     
     # Revision is created only if relevant data changed
     def create_revision

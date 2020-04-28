@@ -9,14 +9,26 @@ class Comfy::Admin::Cms::RevisionsController < Comfy::Admin::Cms::BaseController
   end
 
   def show
+=begin
     case @record
     when Comfy::Cms::Page
       @current_content    = @record.blocks.inject({}){|c, b| c[b.identifier] = b.content; c }
       @versioned_content  = @record.blocks.inject({}){|c, b| c[b.identifier] = @revision.data['blocks_attributes'].detect{|r| r[:identifier] == b.identifier}.try(:[], :content); c }
     else
+=end
       @current_content    = @record.revision_fields.inject({}){|c, f| c[f] = @record.send(f); c }
       @versioned_content  = @record.revision_fields.inject({}){|c, f| c[f] = @revision.data[f]; c }
-    end
+      puts @record.class
+      puts @current_content.inspect
+      if @record.is_a?  Comfy::Cms::Page
+        @current_content.delete("blocks_attributes")
+        @versioned_content.delete("blocks_attributes")
+        @current_content.merge!(@record.blocks.inject({}){|c, b| c[b.identifier] = b.content; c })
+        @versioned_content.merge!(@record.blocks.inject({}){|c, b| c[b.identifier] = @revision.data['blocks_attributes'].detect{|r| r[:identifier] == b.identifier}.try(:[], :content); c })
+        puts @current_content.inspect
+      end
+
+    #end
   end
 
   def revert

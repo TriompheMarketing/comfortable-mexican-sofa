@@ -7,7 +7,13 @@ class Comfy::Cms::Page < ActiveRecord::Base
   cms_is_categorized
  # cms_is_mirrored
   cms_manageable
-  cms_has_revisions_for :blocks_attributes
+  cms_has_revisions_for :blocks_attributes,
+                        :label,
+                        :slug,
+                        :published_at,
+                        :full_path,
+                        :target_page_id,
+                        :parent_id
 
   # -- Relationships --------------------------------------------------------
   belongs_to :site
